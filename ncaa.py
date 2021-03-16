@@ -18,13 +18,9 @@ def insanepick(seed1, seed2):
     if seed1 > seed2:
         crazy_seed1 = int(round(seed2 + sqrt(seed1 - seed2)))
         crazy_seed2 = seed2
-    elif seed1 < seed2:
+    else:
         crazy_seed1 = seed1
         crazy_seed2 = int(round(seed1 + sqrt(seed2 - seed1)))
-    else:
-        # Equal seeds means IT'S ON. No meddling necessary!
-        crazy_seed1 = seed1
-        crazy_seed2 = seed2
 
     # Now also add a random value to each one. On average, this distribution
     # will equalize the seeds. On any one run, it won't.
