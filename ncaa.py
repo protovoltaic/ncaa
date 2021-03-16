@@ -6,8 +6,7 @@ import argparse
 
 
 def pick(seed1, seed2):
-    rand_pick = randint(1, seed1 + seed2)
-    if rand_pick > seed1:
+    if randint(1, seed1 + seed2) > seed1:
         return [seed1, 'first']
     else:
         return [seed2, 'second']
@@ -27,9 +26,7 @@ def insanepick(seed1, seed2):
     crazy_seed1 = crazy_seed1 + randint(1, crazy_seed2)
     crazy_seed2 = crazy_seed2 + randint(1, crazy_seed1)
 
-    rand_pick = randint(1, crazy_seed1 + crazy_seed2)
-
-    if rand_pick > crazy_seed1:
+    if randint(1, crazy_seed1 + crazy_seed2) > crazy_seed1:
         return [seed1, 'first']
     else:
         return [seed2, 'second']
