@@ -1,6 +1,6 @@
 # ncaa.py
 
-This script will predict the outcome of a single 16-team region of the NCAA men's basketball tournament. Using no information except for the team's seed, it's probably as good as anything else!
+This script will predict the outcome of a single 16-team region of the NCAA men's basketball tournament. Using advanced mathematics and no basketball knowledge beyond each team's seed, it's probably as good as any other advice you'll find!
 
 ## Usage
 
