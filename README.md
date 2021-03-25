@@ -12,26 +12,78 @@ The script also accepts an `--insane` parameter, which adds some extra spiciness
 ```
 $ ./ncaa.py --insane
 
-Round 1
-1 wins (first)
-8 wins (first)
-5 wins (first)
-13 wins (second)
-11 wins (second)
-14 wins (second)
-10 wins (second)
-2 wins (first)
+=== Round 1 ===
+West seed 1 wins
+West seed 9 wins
+West seed 5 wins
+West seed 4 wins
+West seed 6 wins
+West seed 14 wins
+West seed 10 wins
+West seed 2 wins
+East seed 1 wins
+East seed 9 wins
+East seed 5 wins
+East seed 13 wins
+East seed 6 wins
+East seed 14 wins
+East seed 7 wins
+East seed 15 wins
+South seed 1 wins
+South seed 8 wins
+South seed 5 wins
+South seed 4 wins
+South seed 6 wins
+South seed 14 wins
+South seed 7 wins
+South seed 2 wins
+Midwest seed 16 wins
+Midwest seed 9 wins
+Midwest seed 12 wins
+Midwest seed 4 wins
+Midwest seed 6 wins
+Midwest seed 3 wins
+Midwest seed 10 wins
+Midwest seed 2 wins
 
-Round 2
-1 wins (first)
-5 wins (first)
-14 wins (second)
-2 wins (second)
+=== Round 2 ===
+West seed 1 wins
+West seed 4 wins
+West seed 14 wins
+West seed 2 wins
+East seed 9 wins
+East seed 5 wins
+East seed 6 wins
+East seed 7 wins
+South seed 1 wins
+South seed 5 wins
+South seed 14 wins
+South seed 2 wins
+Midwest seed 9 wins
+Midwest seed 12 wins
+Midwest seed 6 wins
+Midwest seed 10 wins
 
-Round 3
-5 wins (second)
-2 wins (second)
+=== Round 3 ===
+West seed 4 wins
+West seed 14 wins
+East seed 5 wins
+East seed 7 wins
+South seed 1 wins
+South seed 14 wins
+Midwest seed 12 wins
+Midwest seed 6 wins
 
-Round 4
-2 wins (second)
+=== Round 4 ===
+West seed 4 wins
+East seed 5 wins
+South seed 14 wins
+Midwest seed 12 wins
+
+=== Round 5 ===
+West seed 4 wins
+Midwest seed 12 wins
+
+=== Round 6 ===
+West seed 4 wins
 ```
