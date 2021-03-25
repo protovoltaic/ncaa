@@ -5,55 +5,81 @@ from math import sqrt
 import argparse
 
 
-def pick(seed1, seed2):
-    if randint(1, seed1 + seed2) > seed1:
-        return [seed1, 'first']
+def pick(team1, team2, insane=False):
+    if insane:
+        # "Advanced" algorithm. Same idea as standard, but we mess with the
+        # odds to embrace chaos. First, geometrically reduce the difference
+        # between the seeds to make an upset easier.
+        if team1['seed'] == team2['seed']:
+            insane_seed1 = team1['seed'] 
+            insane_seed2 = team2['seed']
+        elif team1['seed'] > team2['seed']:
+            insane_seed1 = int(round(
+                team2['seed'] + sqrt(team1['seed'] - team2['seed'])
+            ))
+            insane_seed2 = team2['seed']
+        else:
+            insane_seed1 = team1['seed']
+            insane_seed2 = int(round(
+                team1['seed'] + sqrt(team2['seed'] - team1['seed'])
+            ))
+
+        # Now also add a random value to each one. On average, this
+        # distribution will equalize the seeds. On any one run,
+        # it almost certainly won't.
+        insane_seed1 = insane_seed1 + randint(1, insane_seed2)
+        insane_seed2 = insane_seed2 + randint(1, insane_seed1)
+
+        if randint(1, insane_seed1 + insane_seed2) > insane_seed1:
+            return team1
+        else:
+            return team2
     else:
-        return [seed2, 'second']
+        # Standard algorithm: each team gets a number of entries equal
+        # to their seed. If a random choice hits that entry, that team
+        # will lose. So if a 1 seed plays a 5 seed, we'll effectively
+        # select from [1, 5, 5, 5, 5, 5]
+        if randint(1, team1['seed'] + team2['seed']) > team1['seed']:
+            return team1
+        else:
+            return team2
 
 
-def insanepick(seed1, seed2):
-    # First, geometrically reduce the difference to make an upset easier
-    if seed1 > seed2:
-        crazy_seed1 = int(round(seed2 + sqrt(seed1 - seed2)))
-        crazy_seed2 = seed2
+def simulate_tournament(teams, round_number, insane):
+    if len(teams) == 1:
+        return teams[0]
     else:
-        crazy_seed1 = seed1
-        crazy_seed2 = int(round(seed1 + sqrt(seed2 - seed1)))
-
-    # Now also add a random value to each one. On average, this distribution
-    # will equalize the seeds. On any one run, it won't.
-    crazy_seed1 = crazy_seed1 + randint(1, crazy_seed2)
-    crazy_seed2 = crazy_seed2 + randint(1, crazy_seed1)
-
-    if randint(1, crazy_seed1 + crazy_seed2) > crazy_seed1:
-        return [seed1, 'first']
-    else:
-        return [seed2, 'second']
+        winning_teams = [];
+        print('\n=== Round {} ==='.format(round_number))
+        while len(teams):
+            winner = pick(
+                teams.pop(0),
+                teams.pop(0),
+                insane
+            )
+            winning_teams.append(winner)
+            print('{} seed {} wins'.format(
+                winner['region'],
+                winner['seed']
+            ))
+        # Recurse!
+        return simulate_tournament(winning_teams, round_number + 1, insane)
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--insane', action='store_true', help='Go insane?')
 args = parser.parse_args()
+if 'insane' in args:
+    insane = True
+else:
+    insane = False
 
-# Iterate over a 16-team quarter
-seeds = [1, 16, 8, 9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10, 2, 15]
-tournament_round = 1
+# Define the starting order for each region and build the bracket.
+region_order = [1, 16, 8, 9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10, 2, 15]
+teams = []
+for region in ('West', 'East', 'South', 'Midwest'):
+    for seed in region_order:
+        teams.append({'seed': seed, 'region': region})
 
-while(len(seeds) > 1):
-    print('\nRound {}'.format(tournament_round))
-    next_round_seeds = []
-
-    while(len(seeds) > 0):
-        seed1 = seeds.pop(0)
-        seed2 = seeds.pop(0)
-        if args.insane:
-            [winner, order] = insanepick(seed1, seed2)
-        else:
-            [winner, order] = pick(seed1, seed2)
-        print('{} wins ({})'.format(winner, order))
-        next_round_seeds.append(winner)
-
-    seeds = next_round_seeds
-    tournament_round += 1
-
+# Run the tournament.
+simulate_tournament(teams, 1, insane)
