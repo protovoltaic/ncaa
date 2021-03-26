@@ -6,7 +6,16 @@ import argparse
 
 
 def pick(team1, team2, insane=False):
-    if insane:
+    if not insane:
+        # Standard algorithm: each team gets a number of entries equal
+        # to their seed. If a random choice hits that entry, that team
+        # will lose. So if a 1 seed plays a 5 seed, we'll effectively
+        # select from [1, 5, 5, 5, 5, 5]
+        if randint(1, team1['seed'] + team2['seed']) > team1['seed']:
+            return team1
+        else:
+            return team2
+    else:
         # "Advanced" algorithm. Same idea as standard, but we mess with the
         # odds to embrace chaos. First, geometrically reduce the difference
         # between the seeds to make an upset easier.
@@ -31,15 +40,6 @@ def pick(team1, team2, insane=False):
         insane_seed2 = insane_seed2 + randint(1, insane_seed1)
 
         if randint(1, insane_seed1 + insane_seed2) > insane_seed1:
-            return team1
-        else:
-            return team2
-    else:
-        # Standard algorithm: each team gets a number of entries equal
-        # to their seed. If a random choice hits that entry, that team
-        # will lose. So if a 1 seed plays a 5 seed, we'll effectively
-        # select from [1, 5, 5, 5, 5, 5]
-        if randint(1, team1['seed'] + team2['seed']) > team1['seed']:
             return team1
         else:
             return team2
