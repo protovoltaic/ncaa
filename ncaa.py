@@ -21,19 +21,19 @@ def pick(team1, team2, insane=False):
         #
         # First, geometrically reduce the difference between the seeds to
         # make an upset easier.
-        if team1['seed'] == team2['seed']:
-            insane_seed1 = team1['seed']
-            insane_seed2 = team2['seed']
-        elif team1['seed'] > team2['seed']:
+        if team1['seed'] > team2['seed']:
             insane_seed1 = int(round(
-                team2['seed'] + sqrt(team1['seed'] - team2['seed'])
+                team1['seed'] + sqrt(team1['seed'] - team2['seed'])
             ))
             insane_seed2 = team2['seed']
-        else:
+        elif team1['seed'] < team2['seed']:
             insane_seed1 = team1['seed']
             insane_seed2 = int(round(
-                team1['seed'] + sqrt(team2['seed'] - team1['seed'])
+                team2['seed'] + sqrt(team2['seed'] - team1['seed'])
             ))
+        else: # Seeds are equal
+            insane_seed1 = team1['seed']
+            insane_seed2 = team2['seed']
 
         # Now also add a random value to each one. On average, this
         # distribution will equalize the seeds. On any one run,
@@ -71,10 +71,8 @@ def simulate_tournament(teams, round_number, insane):
 parser = argparse.ArgumentParser()
 parser.add_argument('--insane', action='store_true', help='Go insane?')
 args = parser.parse_args()
-if 'insane' in args:
-    insane = True
-else:
-    insane = False
+if 'insane' not in args:
+    args.insane = False
 
 # Define some useful information about the tournament.
 entry_order = [1, 16, 8, 9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10, 2, 15]
@@ -90,4 +88,4 @@ for region in ('West', 'East', 'South', 'Midwest'):
         teams.append({'seed': seed, 'region': region})
 
 # Run the tournament.
-simulate_tournament(teams, 1, insane)
+simulate_tournament(teams, 1, args.insane)
