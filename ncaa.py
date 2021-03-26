@@ -8,19 +8,21 @@ import argparse
 def pick(team1, team2, insane=False):
     if not insane:
         # Standard algorithm: each team gets a number of entries equal
-        # to their seed. If a random choice hits that entry, that team
-        # will lose. So if a 1 seed plays a 5 seed, we'll effectively
-        # select from [1, 5, 5, 5, 5, 5]
+        # to their seed, and if a team's entry is picked, they lose.
+        # A 1 seed vs. a 5 seed would look like: [1,5,5,5,5,5]. Choosing
+        # from that list at random would give a 1 in 6 upset chance.
         if randint(1, team1['seed'] + team2['seed']) > team1['seed']:
             return team1
         else:
             return team2
     else:
         # "Advanced" algorithm. Same idea as standard, but we mess with the
-        # odds to embrace chaos. First, geometrically reduce the difference
-        # between the seeds to make an upset easier.
+        # odds and embrace chaos. This mode tends to get the "best" results.
+        #
+        # First, geometrically reduce the difference between the seeds to
+        # make an upset easier.
         if team1['seed'] == team2['seed']:
-            insane_seed1 = team1['seed'] 
+            insane_seed1 = team1['seed']
             insane_seed2 = team2['seed']
         elif team1['seed'] > team2['seed']:
             insane_seed1 = int(round(
@@ -49,8 +51,8 @@ def simulate_tournament(teams, round_number, insane):
     if len(teams) == 1:
         return teams[0]
     else:
-        winning_teams = [];
-        print('\n=== Round {} ==='.format(round_number))
+        winning_teams = []
+        print('\n=== {} ==='.format(round_names[round_number]))
         while len(teams):
             winner = pick(
                 teams.pop(0),
@@ -74,11 +76,17 @@ if 'insane' in args:
 else:
     insane = False
 
-# Define the starting order for each region and build the bracket.
-region_order = [1, 16, 8, 9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10, 2, 15]
+# Define some useful information about the tournament.
+entry_order = [1, 16, 8, 9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10, 2, 15]
+round_names = {
+    1: 'First Round', 2: 'Second Round', 3: 'Round of Sixteen',
+    4: 'Elite Eight', 5: 'Final Four', 6: 'Championship'
+}
+
+# Build an ordered list of region:seed pairings to define initial matchups.
 teams = []
 for region in ('West', 'East', 'South', 'Midwest'):
-    for seed in region_order:
+    for seed in entry_order:
         teams.append({'seed': seed, 'region': region})
 
 # Run the tournament.
