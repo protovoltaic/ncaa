@@ -64,7 +64,7 @@ Midwest seed 4 wins
 Midwest seed 14 wins
 Midwest seed 7 wins
 
-=== Round of Sixteen ===
+=== Sweet Sixteen ===
 West seed 4 wins
 West seed 11 wins
 East seed 4 wins

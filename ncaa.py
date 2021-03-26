@@ -77,7 +77,7 @@ if 'insane' not in args:
 # Define some useful information about the tournament.
 entry_order = [1, 16, 8, 9, 5, 12, 4, 13, 6, 11, 3, 14, 7, 10, 2, 15]
 round_names = {
-    1: 'First Round', 2: 'Second Round', 3: 'Round of Sixteen',
+    1: 'First Round', 2: 'Second Round', 3: 'Sweet Sixteen',
     4: 'Elite Eight', 5: 'Final Four', 6: 'Championship'
 }
 
