@@ -80,7 +80,7 @@ round_names = {
 
 # Build an ordered list of region:seed pairings to define initial matchups.
 teams = []
-for region in ('Regional 1', 'Regional 4', 'Regional 2', 'Regional 3'):
+for region in ('East', 'South', 'West', 'Midwest'):
     for seed in entry_order:
         teams.append({'seed': seed, 'region': region})
 
