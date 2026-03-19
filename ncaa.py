@@ -52,7 +52,7 @@ def simulate_tournament(teams, round_number, insane):
         return teams[0]
     else:
         winning_teams = []
-        print('\n=== {} ==='.format(round_names[round_number]))
+        print(f"\n=== {round_names[round_number]} ===")
         while len(teams):
             winner = pick(
                 teams.pop(0),
@@ -60,10 +60,7 @@ def simulate_tournament(teams, round_number, insane):
                 insane
             )
             winning_teams.append(winner)
-            print('{} seed {} wins'.format(
-                winner['region'],
-                winner['seed']
-            ))
+            print(f"{winner['region']} seed {winner['seed']} wins")
         # Recurse!
         return simulate_tournament(winning_teams, round_number + 1, insane)
 
